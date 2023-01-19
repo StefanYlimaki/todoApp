@@ -4,6 +4,7 @@ import { StatusBar } from "expo-status-bar";
 import TodoInput from "./components/TodoInput";
 import TodoList from "./components/TodoList";
 import axios from "axios";
+import { baseUrl } from "@env";
 
 export default function App() {
   const [todos, setTodos] = useState([]);
@@ -11,7 +12,7 @@ export default function App() {
 
   useEffect(() => {
     axios
-      .get("https://todo-app-lilac-five.vercel.app/api/todos")
+      .get(`${baseUrl}/api/todos`)
       .then((response) => response.data)
       .then((data) => {
         setTodos(data);
@@ -20,11 +21,9 @@ export default function App() {
 
   function deleteTodo(id) {
     console.log(id);
-    axios
-      .delete(`https://todo-app-lilac-five.vercel.app/api/todos/${id}`)
-      .then(() => {
-        setTodos(todos.filter((todo) => todo._id !== id));
-      });
+    axios.delete(`${baseUrl}/api/todos/${id}`).then(() => {
+      setTodos(todos.filter((todo) => todo._id !== id));
+    });
   }
 
   function toggleModalVisibility() {

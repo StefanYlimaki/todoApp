@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { useState } from "react";
 import axios from "axios";
+import { baseUrl } from "@env";
 
 const TodoInput = ({ modalIsVisible, toggleModalVisibility }) => {
   const [todo, setTodo] = useState("");
@@ -17,7 +18,7 @@ const TodoInput = ({ modalIsVisible, toggleModalVisibility }) => {
   }
 
   function addTodoHandler() {
-    axios.post("https://todo-app-lilac-five.vercel.app/api/todos", {
+    axios.post(`${baseUrl}/api/todos`, {
       text: todo,
     });
     setTodo("");
