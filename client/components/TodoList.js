@@ -9,8 +9,8 @@ const TodoList = ({ todos, deleteTodo }) => {
         renderItem={(todo) => {
           return <TodoItem todo={todo} deleteTodo={deleteTodo} />;
         }}
-        keyExtractor={(item, index) => {
-          return item.id;
+        keyExtractor={(todo, index) => {
+          return todo._id;
         }}
       />
     </View>

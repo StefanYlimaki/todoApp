@@ -7,8 +7,9 @@ import {
   Image,
 } from "react-native";
 import { useState } from "react";
+import axios from "axios";
 
-const TodoInput = ({ setTodos, modalIsVisible, toggleModalVisibility }) => {
+const TodoInput = ({ modalIsVisible, toggleModalVisibility }) => {
   const [todo, setTodo] = useState("");
 
   function todoInputHandler(enteredText) {
@@ -16,10 +17,9 @@ const TodoInput = ({ setTodos, modalIsVisible, toggleModalVisibility }) => {
   }
 
   function addTodoHandler() {
-    setTodos((currentTodos) => [
-      ...currentTodos,
-      { text: todo, id: Math.random().toString() },
-    ]);
+    axios.post("https://todo-app-lilac-five.vercel.app/api/todos", {
+      text: todo,
+    });
     setTodo("");
     toggleModalVisibility();
   }

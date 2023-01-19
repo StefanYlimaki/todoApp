@@ -1,17 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { StyleSheet, View, Button } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import TodoInput from "./components/TodoInput";
 import TodoList from "./components/TodoList";
+import axios from "axios";
 
 export default function App() {
   const [todos, setTodos] = useState([]);
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
+  useEffect(() => {
+    axios
+      .get("https://todo-app-lilac-five.vercel.app/api/todos")
+      .then((response) => response.data)
+      .then((data) => {
+        setTodos(data);
+      });
+  }, [todos]);
+
   function deleteTodo(id) {
-    setTodos((currentTodos) => {
-      return currentTodos.filter((todo) => todo.id !== id);
-    });
+    console.log(id);
+    axios
+      .delete(`https://todo-app-lilac-five.vercel.app/api/todos/${id}`)
+      .then(() => {
+        setTodos(todos.filter((todo) => todo._id !== id));
+      });
   }
 
   function toggleModalVisibility() {
