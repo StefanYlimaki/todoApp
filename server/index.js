@@ -24,8 +24,8 @@ app.get("/api/todos", async (req, res) => {
 app.post("/api/todos", async (req, res) => {
   const todo = new Todo({
     text: req.body.text,
+    todoType: req.body.todoType
   });
-  console.log(todo.text);
   todo.save().then((savedTodo) => {
     res.json(savedTodo);
   });
