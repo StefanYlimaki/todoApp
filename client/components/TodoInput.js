@@ -1,90 +1,78 @@
 import {
   View,
   TextInput,
-  Button,
   StyleSheet,
-  Modal,
-  Image,
+  Text,
+  TouchableOpacity
 } from "react-native";
 import { useState } from "react";
 import axios from "axios";
 import { baseUrl } from "@env";
 
-const TodoInput = ({ modalIsVisible, toggleModalVisibility }) => {
+const TodoInput = ({ todoType }) => {
   const [todo, setTodo] = useState("");
 
-  function todoInputHandler(enteredText) {
+  function todoChangeTextHandler(enteredText) {
     setTodo(enteredText);
   }
 
   function addTodoHandler() {
     axios.post(`${baseUrl}/api/todos`, {
       text: todo,
+      todoType: todoType
     });
     setTodo("");
-    toggleModalVisibility();
   }
 
   return (
-    <Modal visible={modalIsVisible} animationType="slide">
-      <View style={styles.inputContainer}>
-        <Image
-          source={require("../assets/images/goal.png")}
-          style={styles.image}
-        />
+    <View style={styles.todoInputContainer}>
+      <View style={styles.textInputContainer}>
         <TextInput
           style={styles.textInput}
-          placeholder="type your todo in here"
-          onChangeText={todoInputHandler}
+          onChangeText={todoChangeTextHandler}  
           value={todo}
         />
-        <View style={styles.buttonContainer}>
-          <View style={styles.button}>
-            <Button
-              title="Cancel"
-              onPress={toggleModalVisibility}
-              color="#f31282"
-            />
-          </View>
-          <View style={styles.button}>
-            <Button title="Add Todo" onPress={addTodoHandler} color="#b180f0" />
-          </View>
-        </View>
       </View>
-    </Modal>
-  );
+      <View>
+        <TouchableOpacity style={styles.button} onPress={() => addTodoHandler() }>
+          <Text>Lisää</Text>
+        </TouchableOpacity>
+      </View>
+      
+    </View>
+  )
 };
 
 const styles = StyleSheet.create({
-  inputContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 16,
-    backgroundColor: "#311b6b",
+  todoInputContainer: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  textInputContainer: {
+    width: "85%"
   },
   textInput: {
     borderWidth: 1,
-    borderColor: "#e4d0ff",
+    borderColor: "black",
     backgroundColor: "#e4d0ff",
     color: "#120438",
     borderRadius: 12,
-    width: "100%",
     padding: 16,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    marginTop: 16,
+    marginRight: 8,
+    marginLeft: 8,
+    marginTop: 8,
+    height: 60
   },
   button: {
-    width: 120,
-    marginHorizontal: 8,
-  },
-  image: {
-    width: 100,
-    height: 100,
-    margin: 20,
-  },
+    marginTop: 8,
+    height: 60,
+    width: 55,
+    borderRadius: 10,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'grey'
+  }
 });
 
 export default TodoInput;

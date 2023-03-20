@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@expo/webpack-config": "^0.17.2",
+    "@react-navigation/material-top-tabs": "^6.6.0",
     "axios": "^1.2.3",
     "dotenv": "^16.0.3",
     "expo": "~47.0.12",
